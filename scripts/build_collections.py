@@ -1,7 +1,7 @@
 import json
 import re
 from pathlib import Path
-from typing import Optional
+from typing import List, Optional, Tuple
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_DATA_DIR = REPO_ROOT / "data" / "raw" / "task1_train_files_2026" / "cases"
@@ -17,18 +17,54 @@ if not all_files:
 def clean_coliee_text(text: str) -> str:
     # Normalize whitespaces but preserve the suppressed tags
     text = re.sub(r'\s+', ' ', text)
-    # Optional: Replace specific case header artifacts if present
-    # text = re.sub(r'Date: \d+', '', text) 
+
     return text.strip()
 
-# Will need to be update to actually parse dates, does not actually get the dates from the documents yet
-def extract_case_date(text: str) -> Optional[str]:
-    for line in text.splitlines():
-        match = re.match(r'^[ \t]*Date[ \t]*:[ \t]*(.+?)[ \t]*$', line, re.IGNORECASE)
-        if match:
-            return match.group(1)
-    return None
+def get_paragraphs(text: str) -> List[Tuple[int, str]]:
+    paragraph_markers = list(
+        re.finditer(r"(?m)^[ \t]*\[[ \t]*(\d+)[ \t]*\][ \t]*(?:\r?\n|$)", text)
+    )
+    paragraphs = []
 
+    for index, marker in enumerate(paragraph_markers):
+        end = paragraph_markers[index + 1].start() if index + 1 < len(paragraph_markers) else len(text)
+        paragraph_text = clean_coliee_text(text[marker.end():end])
+        if paragraph_text:
+            paragraphs.append((int(marker.group(1)), paragraph_text))
+
+    return paragraphs
+
+
+def extract_case_year(file_path: Path) -> Optional[int]:
+    """
+    Reads the first 30 lines of a COLIEE text file and attempts to extract 
+    the decision year using regular expressions.
+    """
+    # Regex targets 4-digit years adjacent to structural terms like Date or Dated
+    # It accounts for formats like: "Date: 20151124", "Date: 2012-05-14", or "Dated: April 4, 1999"
+    date_patterns = [
+        r"(?:Date|Dated)\s*:\s*(\d{4})\d{4}",          # Formats like 20151124 -> 2015
+        r"(?:Date|Dated)[^:\n]*:\s*.*?(\d{4})",        # Formats like Date of Decision: May 12, 2010
+        r"\b(19\d{2}|20\d{2})\b"                       # General fallback for any safe year block
+    ]
+    
+    try:
+        with open(file_path, 'r', encoding='utf-8', errors='ignore') as f:
+            # We only need the header block to extract metadata
+            header_lines = [next(f).strip() for _ in range(30)]
+            header_text = "\n".join(header_lines)
+            
+        for pattern in date_patterns:
+            match = re.search(pattern, header_text, re.IGNORECASE)
+            if match:
+                year = int(match.group(1))
+                # Validate the year is reasonable for the dataset scale
+                if 1900 <= year <= 2026: 
+                    return year
+                    
+        return None
+    except (FileNotFoundError, StopIteration):
+        return None
 
 # Setting up documents as structured JSONs
 collection_documents = []
@@ -37,14 +73,15 @@ for filename in all_files:
     with open(filename, "r", encoding="utf-8") as f:
         raw_content = f.read()
         
-    cleaned_content = clean_coliee_text(raw_content)
-    case_date = extract_case_date(raw_content)
-    
-    collection_documents.append({
-        "id": filename.name, # e.g. "000001.txt"
-        "date": case_date,
-        "contents": cleaned_content
-    })
+    case_date = extract_case_year(filename)
+
+    for paragraph_number, paragraph_text in get_paragraphs(raw_content):
+        collection_documents.append({
+            "doc_id": filename.name, # e.g. "000001.txt"
+            "para_id": f"{filename.stem}_{paragraph_number}",
+            "date": case_date,
+            "text": paragraph_text
+        })
 
 # Export to a JSONL file format
 DEFAULT_OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
