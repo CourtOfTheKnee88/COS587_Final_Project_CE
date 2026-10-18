@@ -38,6 +38,18 @@ retrieval, COLIEE}
 \section{Methodology}
 \label{sec:method}
 
+\subsection{Preprocessing}
+All documents are passed through the same pipeline. This was done to ensure that there is uniformity among the data and to help with indexing. The steps were applied in the following order:
+
+\begin{enumerate}
+  \item \textbf{Text cleaning.} Each document was removed of extra whitespace in order to help separate it into paragraphs. 
+  \item \textbf{Paragraph Separtion.} Each case is separated by paragraphs ensuring to skip empty paragraphs. It returns a number to identify each paragraph as well as the paragraph itself. 
+  \item \textbf{Date Extraction.} Each case gets a year extracted from it to help with future model implementation.
+ \item \textbf{Tokenization and Filtering.}
+\end{enumerate}
+
+
+
 \section{Evaluation and Results}
 
 \section{Discussion}

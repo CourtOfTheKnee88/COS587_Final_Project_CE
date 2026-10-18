@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.3.22)  14 OCT 2026 15:51
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.3.22)  18 OCT 2026 14:45
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -855,21 +855,21 @@ LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
  ***********
 Package rerunfilecheck Info: File `paper.out' has not changed.
-(rerunfilecheck)             Checksum: DA6040E73167F2E9FFEA762EFE95AF20;908.
+(rerunfilecheck)             Checksum: 48B7C81A31E80214AA1A5EBCF68DB3D2;1053.
  ) 
 Here is how much of TeX's memory you used:
- 20777 strings out of 467525
- 332916 string characters out of 5418982
- 810579 words of memory out of 5000000
- 49089 multiletter control sequences out of 15000+600000
- 700928 words of font info for 129 fonts, out of 8000000 for 9000
+ 20803 strings out of 467525
+ 333525 string characters out of 5418982
+ 818755 words of memory out of 5000000
+ 49092 multiletter control sequences out of 15000+600000
+ 702820 words of font info for 142 fonts, out of 8000000 for 9000
  1302 hyphenation exceptions out of 8191
  90i,11n,131p,1072b,623s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2026/texmf-dist/fonts/type1/public/libertine/LinBiolinumTB.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/libertine/LinLibertineT.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/libertine/LinLibertineTB.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/libertine/LinLibertineTI.pfb>
-Output written on paper.pdf (1 page, 285694 bytes).
+Output written on paper.pdf (1 page, 290756 bytes).
 PDF statistics:
- 82 PDF objects out of 1000 (max. 8388607)
- 66 compressed objects within 1 object stream
- 14 named destinations out of 1000 (max. 500000)
- 41041 words of extra memory for PDF output out of 42996 (max. 10000000)
+ 91 PDF objects out of 1000 (max. 8388607)
+ 75 compressed objects within 1 object stream
+ 19 named destinations out of 1000 (max. 500000)
+ 43097 words of extra memory for PDF output out of 51595 (max. 10000000)
 

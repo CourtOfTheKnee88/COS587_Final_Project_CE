@@ -1,14 +1,14 @@
 # Fdb version 4
-["bibtex paper"] 1792007415.91527 "paper.aux" "paper.bbl" "paper" 1792007513.8291 0
+["bibtex paper"] 1792348310.87399 "paper.aux" "paper.bbl" "paper" 1792349114.75702 0
   "./references.bib" 1792007403.08382 163 e20fe3ed25fd4ff604a2d731ac76ea0e ""
   "/usr/local/texlive/2026/texmf-dist/bibtex/bst/acmart/ACM-Reference-Format.bst" 1748720794 93560 12e0ced1522ea2bfa9b2fb12855c7e9e ""
-  "paper.aux" 1792007513.60585 1428 523cedacbf2c90403a1325250183e4df "pdflatex"
+  "paper.aux" 1792349114.53761 1555 1a4db7d74d2ba86cb047b2fd9e477d00 "pdflatex"
   (generated)
   "paper.bbl"
   "paper.blg"
   (rewritten before read)
-["pdflatex"] 1792007513.07723 "/Users/courtneyjackson/Documents/GitHub/COS587_Final_Project_CE/paper/paper.tex" "paper.pdf" "paper" 1792007513.8292 0
-  "/Users/courtneyjackson/Documents/GitHub/COS587_Final_Project_CE/paper/paper.tex" 1792007512.71039 848 55c7ec4fa9e0279756c143238b72d8df ""
+["pdflatex"] 1792349113.97115 "/Users/courtneyjackson/Documents/GitHub/COS587_Final_Project_CE/paper/paper.tex" "paper.pdf" "paper" 1792349114.75713 0
+  "/Users/courtneyjackson/Documents/GitHub/COS587_Final_Project_CE/paper/paper.tex" 1792349113.68725 1579 21eccf060e83f4170fc498ad0961f7c5 ""
   "/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/libertine/lbtn_25tcsq.enc" 1490131464 2921 8ca0eb0831f9bc5da080d3697cfe67bf ""
   "/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/libertine/lbtn_76gpa5.enc" 1490131464 2933 9ad527ce78d7c5fa0a642dead095f172 ""
   "/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/libertine/lbtn_7grukw.enc" 1490131464 2934 a4a9158faed2e9e89c771b4e3b7fc12f ""
@@ -166,10 +166,10 @@
   "/usr/local/texlive/2026/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1790705670 5573038 b99aad5e4898a9034e953632f940512b ""
   "/usr/local/texlive/2026/texmf-var/web2c/pdftex/pdflatex.fmt" 1774209607 3636776 dc5fa9b6b1453b9d196cd42edf876004 ""
   "/usr/local/texlive/2026/texmf.cnf" 1774209515 577 648cd9f92f9c0eac486f4c71c85cfbbe ""
-  "paper.aux" 1792007513.60585 1428 523cedacbf2c90403a1325250183e4df "pdflatex"
-  "paper.bbl" 1792007416.00581 1983 effa4220ab78ca0c4db8a85c4f96b7ba "bibtex paper"
-  "paper.out" 1792007513.60624 908 da6040e73167f2e9ffea762efe95af20 "pdflatex"
-  "paper.tex" 1792007512.71039 848 55c7ec4fa9e0279756c143238b72d8df ""
+  "paper.aux" 1792349114.53761 1555 1a4db7d74d2ba86cb047b2fd9e477d00 "pdflatex"
+  "paper.bbl" 1792348310.94754 1983 effa4220ab78ca0c4db8a85c4f96b7ba "bibtex paper"
+  "paper.out" 1792349114.538 1053 48b7c81a31e80214aa1a5ebcf68db3d2 "pdflatex"
+  "paper.tex" 1792349113.68725 1579 21eccf060e83f4170fc498ad0961f7c5 ""
   (generated)
   "paper.aux"
   "paper.log"
