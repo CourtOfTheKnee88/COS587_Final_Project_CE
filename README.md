@@ -15,3 +15,15 @@ Our goal is to predict the decision of a new case by entailment from previous re
 The task investigates the performance of systems that identifies a paragraph that entails the decision of an unseen case. Training data consists of triples of a query, a noticed case, and a paragraph number of the noticed case by which the decision of the query is entailed. The process of executing the queries over the noticed cases and generating the experimental runs should be entirely automatic. Test data will include only queries and noticed cases, but no paragraph numbers.
 
 There should be no human intervention at any stage, including modifications to your retrieval system motivated by an inspection of the test queries. 'Decision', in this context, does not mean the final decision of a case, but rather a conclusion expressed by the judge which is entailed by one or more particular paragraphs from the noticed case. In our dataset, this information is packaged in a file named 'entailed_fragment.txt'.[https://coliee.org/COLIEE2026/tasks/task2](Task 2)
+
+## Running Everything
+
+# Setting up the environment
+
+cd scripts
+bash install.sh
+
+# Running Build Collections
+
+cd scripts
+python build_collections.py
