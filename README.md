@@ -27,3 +27,39 @@ bash install.sh
 
 cd scripts
 python build_collections.py
+
+## Running the Tokenizer and Indexer
+
+The tokenizer and indexer are used to prepare the COLIEE legal documents for retrieval. Run the following commands from the main project directory.
+
+### Tokenizer
+
+To test the tokenizer with example text:
+
+```powershell
+python -m src.preprocessing.tokenize "The Court reviewed subsection 72(1) of the Immigration Act."
+```
+
+The tokenizer will print the resulting tokens. Preprocessing settings are stored in `config/preprocessing.yaml`.
+
+### Indexer
+
+Before running the indexer, make sure the processed collection has been generated and is available at:
+
+`data/processed/coliee_corpus.jsonl`
+
+To build the inverted index:
+
+```powershell
+python -m src.index.index
+```
+
+The indexer processes each paragraph, records term frequencies and paragraph lengths, and keeps track of the original case IDs.
+
+The finished index is saved to:
+
+`data/processed/coliee_index.json`
+
+The full collection contains 350,459 paragraphs, so indexing may take a few minutes and use a fair amount of memory.
+
+**Note:** The `data/` folder is ignored by Git, so the processed collection and generated index need to be created locally. They won't be downloaded when cloning the repository.
