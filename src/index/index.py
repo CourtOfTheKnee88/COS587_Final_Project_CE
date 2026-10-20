@@ -39,8 +39,8 @@ class CorpusIndex:
         self.avg_doc_length = 0.0
         self.doc_lengths = []
         self._postings = {}
-        self._doc_ids = []
-        self._doc_numbers = {}
+        self._para_ids = []
+        self._para_numbers = {}
         self._case_ids = []
 
     def vocabulary(self):
@@ -58,11 +58,11 @@ class CorpusIndex:
 
         return self._postings[term]
 
-    def doc_id(self, doc_number):
-        return self._doc_ids[doc_number]
+    def para_id(self, doc_number):
+        return self._para_ids[doc_number]
 
-    def doc_number(self, doc_id):
-        return self._doc_numbers[doc_id]
+    def para_number(self, para_id):
+        return self._para_numbers[para_id]
 
     def case_id(self, doc_number):
         return self._case_ids[doc_number]
@@ -73,7 +73,7 @@ class CorpusIndex:
             "avg_doc_length": self.avg_doc_length,
             "doc_lengths": self.doc_lengths,
             "postings": self._postings,
-            "doc_ids": self._doc_ids,
+            "para_ids": self._para_ids,
             "case_ids": self._case_ids
         }
 
@@ -84,11 +84,11 @@ class CorpusIndex:
         index.avg_doc_length = data["avg_doc_length"]
         index.doc_lengths = data["doc_lengths"]
         index._postings = data["postings"]
-        index._doc_ids = data["doc_ids"]
+        index._para_ids = data["para_ids"] if "para_ids" in data else data["doc_ids"]
         index._case_ids = data["case_ids"]
-        index._doc_numbers = {
-            doc_id: doc_number
-            for doc_number, doc_id in enumerate(index._doc_ids)
+        index._para_numbers = {
+            para_id: doc_number
+            for doc_number, para_id in enumerate(index._para_ids)
         }
 
         return index
@@ -116,9 +116,9 @@ def build_index_from_jsonl(file_path):
             para_id = record["para_id"]
             tokens = tokenize_text(record["text"])
             doc_number = index.num_docs
-            index._doc_ids.append(para_id)
+            index._para_ids.append(para_id)
             index._case_ids.append(case_id)
-            index._doc_numbers[para_id] = doc_number
+            index._para_numbers[para_id] = doc_number
             index.doc_lengths.append(len(tokens))
             term_frequencies = Counter(tokens)
 
