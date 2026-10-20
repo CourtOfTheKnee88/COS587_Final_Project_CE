@@ -1,0 +1,16 @@
+
+# COLIEE legal document retrieval preprocessing
+# Baseline configuration
+
+tokenizer:
+  lowercase: true
+  split_underscores: true
+  min_token_length: 1
+  drop_numeric: false
+
+  stopwords:
+    source: none
+    extra: []
+    keep: []
+
+  stemming: none
