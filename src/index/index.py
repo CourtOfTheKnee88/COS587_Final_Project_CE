@@ -42,6 +42,9 @@ class CorpusIndex:
         self._para_ids = []
         self._para_numbers = {}
         self._case_ids = []
+        self.num_cases = 0
+        self.avg_case_length = 0.0
+        self.case_lengths = {}
 
     def vocabulary(self):
         return self._postings.keys()
@@ -58,14 +61,14 @@ class CorpusIndex:
 
         return self._postings[term]
 
-    def para_id(self, doc_number):
-        return self._para_ids[doc_number]
+    def para_id(self, para_number):
+        return self._para_ids[para_number]
 
     def para_number(self, para_id):
         return self._para_numbers[para_id]
 
-    def case_id(self, doc_number):
-        return self._case_ids[doc_number]
+    def case_id(self, para_number):
+        return self._case_ids[para_number]
 
     def to_dict(self):
         return {
@@ -74,7 +77,10 @@ class CorpusIndex:
             "doc_lengths": self.doc_lengths,
             "postings": self._postings,
             "para_ids": self._para_ids,
-            "case_ids": self._case_ids
+            "case_ids": self._case_ids,
+            "num_cases": self.num_cases,
+            "avg_case_length": self.avg_case_length,
+            "case_lengths": self.case_lengths
         }
 
     @classmethod
@@ -87,9 +93,20 @@ class CorpusIndex:
         index._para_ids = data["para_ids"] if "para_ids" in data else data["doc_ids"]
         index._case_ids = data["case_ids"]
         index._para_numbers = {
-            para_id: doc_number
-            for doc_number, para_id in enumerate(index._para_ids)
+            para_id: para_number
+            for para_number, para_id in enumerate(index._para_ids)
         }
+
+        index.case_lengths = data.get("case_lengths", {})
+
+        if not index.case_lengths:
+            for para_number, case_id in enumerate(index._case_ids):
+                index.case_lengths[case_id] = (index.case_lengths.get(case_id, 0) + index.doc_lengths[para_number])
+
+        index.num_cases = len(index.case_lengths)
+
+        if index.num_cases > 0:
+            index.avg_case_length = sum(index.case_lengths.values()) / index.num_cases
 
         return index
 
@@ -115,24 +132,34 @@ def build_index_from_jsonl(file_path):
             case_id = record["doc_id"]
             para_id = record["para_id"]
             tokens = tokenize_text(record["text"])
-            doc_number = index.num_docs
+            para_number = index.num_docs
             index._para_ids.append(para_id)
             index._case_ids.append(case_id)
-            index._para_numbers[para_id] = doc_number
+            index._para_numbers[para_id] = para_number
             index.doc_lengths.append(len(tokens))
+
+            if case_id not in index.case_lengths:
+                index.case_lengths[case_id] = 0
+
+            index.case_lengths[case_id] += len(tokens)
             term_frequencies = Counter(tokens)
 
             for term, frequency in term_frequencies.items():
                 if term not in index._postings:
                     index._postings[term] = ([], [])
 
-                index._postings[term][0].append(doc_number)
+                index._postings[term][0].append(para_number)
                 index._postings[term][1].append(frequency)
 
             index.num_docs += 1
 
     if index.num_docs > 0:
         index.avg_doc_length = sum(index.doc_lengths) / index.num_docs
+
+    index.num_cases = len(index.case_lengths)
+
+    if index.num_cases > 0:
+        index.avg_case_length = sum(index.case_lengths.values()) / index.num_cases
 
     return index
 
