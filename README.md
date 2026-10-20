@@ -63,3 +63,31 @@ The finished index is saved to:
 The full collection contains 350,459 paragraphs, so indexing may take a few minutes and use a fair amount of memory.
 
 **Note:** The `data/` folder is ignored by Git, so the processed collection and generated index need to be created locally. They won't be downloaded when cloning the repository.
+
+## Task Distribution
+
+The following outlines each team member's contributions to the project thus far.
+
+### Courtney
+- Developed the collection-building script (`scripts/build_collections.py`) to prepare the COLIEE legal case dataset for processing and retrieval.
+- Organized and converted the original legal case documents into a structured collection for indexing.
+- Reviewed the tokenizer and indexer implementations, identifying issues and recommending improvements.
+- Provided feedback on the organization of paragraph and case identifiers to improve clarity and consistency throughout the indexer.
+- Recommended adding case-level statistics to support Task 1's focus on retrieving entire legal cases.
+- Identified unnecessary preprocessing functionality and suggested simplifying the tokenizer to better fit the COLIEE dataset.
+- Helped improve code organization, maintainability, and consistency through GitHub pull request reviews.
+- Researched related work on COLIEE legal case retrieval and contributed to the midpoint review paper.
+
+### Esther
+- Implemented and refined the tokenizer (`src/preprocessing/tokenize.py`) for processing legal documents and search queries.
+- Created and updated the preprocessing configuration (`config/preprocessing.yaml`) to support configurable tokenization, stopword removal, and stemming.
+- Implemented and refined the inverted index (`src/index/index.py`), including term frequencies, paragraph identifiers, and document length statistics.
+- Added case-level indexing statistics, including case identifiers, case lengths, total case count, and average case length.
+- Addressed code review feedback and updated the tokenizer and indexer to improve functionality and consistency.
+- Tested and validated the tokenizer and indexer using sample text, a smaller test collection, and the full COLIEE dataset.
+- Contributed to the midpoint review paper, including methodology, implementation details, and preliminary testing results.
+
+### Collaborative Work
+- Discussed retrieval approaches and prioritized COLIEE Task 1 based on the project requirements.
+- Collaborated through GitHub pull requests, code reviews, and implementation revisions.
+- Worked on project documentation and midpoint review materials.
