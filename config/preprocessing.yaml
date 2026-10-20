@@ -2,11 +2,6 @@
 # COLIEE legal document retrieval preprocessing
 # Baseline configuration
 
-cleaning:
-  remove_math: false
-  remove_urls: false
-  remove_citations: false
-
 tokenizer:
   lowercase: true
   split_underscores: true

@@ -20,11 +20,6 @@ import yaml
 REPO_ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_CONFIG_PATH = REPO_ROOT / "config" / "preprocessing.yaml"
 
-MATH_SPAN = re.compile(r"\$[^$]*\$")
-LATEX_COMMAND = re.compile(r"\\[a-zA-Z]+")
-URL = re.compile(r"https?://\S+|www\.\S+")
-CITATION = re.compile(r"\[\s*\d+(?:\s*[,–-]\s*\d+)*\s*\]")
-
 # Match Unicode letters and numbers, excluding underscores.
 TOKEN_PATTERN = re.compile(r"[^\W_]+")
 WORD_PATTERN = re.compile(r"\w+")
@@ -33,24 +28,6 @@ WORD_PATTERN = re.compile(r"\w+")
 def load_config(config_path=DEFAULT_CONFIG_PATH):
     with open(config_path, "r", encoding="utf-8") as file:
         return yaml.safe_load(file) or {}
-
-
-def clean_text(text, remove_math=False, remove_urls=False,
-               remove_citations=False):
-    """Optionally remove unwanted formatting from legal text."""
-    if remove_math:
-        if text.count("$") % 2 == 0:
-            text = MATH_SPAN.sub(" ", text)
-        text = LATEX_COMMAND.sub(" ", text)
-
-    if remove_urls:
-        text = URL.sub(" ", text)
-
-    if remove_citations:
-        text = CITATION.sub(" ", text)
-
-    return text
-
 
 def load_stopwords(config):
     """Build a stopword set from the selected source."""
@@ -101,15 +78,7 @@ class Tokenizer:
 
     def __init__(self, config_path=DEFAULT_CONFIG_PATH):
         config = load_config(config_path)
-        cleaning = config.get("cleaning") or {}
         settings = config.get("tokenizer") or {}
-
-        self.cleaning = {
-            "remove_math": cleaning.get("remove_math", False),
-            "remove_urls": cleaning.get("remove_urls", False),
-            "remove_citations": cleaning.get("remove_citations", False),
-        }
-
         self.lowercase = settings.get("lowercase", True)
         self.min_token_length = settings.get("min_token_length", 1)
         self.drop_numeric = settings.get("drop_numeric", False)
@@ -124,8 +93,6 @@ class Tokenizer:
         self.stem = build_stemmer(settings.get("stemming", "none"))
 
     def tokenize(self, text):
-        """Return an ordered list of processed tokens."""
-        text = clean_text(text, **self.cleaning)
 
         if self.lowercase:
             text = text.lower()

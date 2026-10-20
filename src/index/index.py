@@ -182,5 +182,7 @@ if __name__ == "__main__":
     )
 
     print("Paragraphs indexed:", coliee_index.num_docs)
+    print("Cases indexed:", coliee_index.num_cases)
     print("Unique terms in index:", len(coliee_index.vocabulary()))
     print("Average paragraph length:", coliee_index.avg_doc_length)
+    print("Average case length:", coliee_index.avg_case_length)
